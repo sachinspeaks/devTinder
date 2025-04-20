@@ -1,26 +1,30 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 
 const app = express();
 
-app.post("/user/:count", (req: Request, res: Response) => {
-  console.log(req.params.count);
-  console.log(req.params);
-  res.send({
-    name: "John Doe",
-    age: 30,
-  });
+// app.get("/sachin", (req: Request, res: Response, next: NextFunction) => {
+//   console.log("Sachin handler 1");
+//   next();
+// });
+
+// app.get("/", (req: Request, res: Response, next: NextFunction) => {
+//   console.log("Sachin handler 2");
+//   res.send("Response from Sachin handler 2");
+// });
+
+// app.use("/diji", (req, res, next) => {
+//   console.log("App.use");
+//   res.send("Response from Diji handler 1");
+// });
+
+app.use("/diji", (req: Request, res: Response, next: NextFunction) => {
+  console.log("authenticated");
+  next();
 });
 
-app.post("/topic", (req: Request, res: Response) => {
-  console.log(req.query);
-  res.send({
-    name: "John Doe",
-    age: 30,
-  });
-});
-
-app.use("/kitty", (req: Request, res: Response) => {
-  res.send("Hello from the server");
+app.use("/diji", (req: Request, res: Response, next: NextFunction) => {
+  console.log("request handler ");
+  res.send("Response from Diji handler 2");
 });
 
 app.listen(3000, () => {
